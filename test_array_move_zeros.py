@@ -21,11 +21,13 @@ def zeros_in_array(a: [int]) -> [int]:
     return ret_val
 
 
-def compare_lists(a, b: [int]) -> bool:
+def compare_lists(l1, l2: [int]) -> bool:
+    if (l1 == [] and l2 != []) or (l2 == [] and l1 != []):
+        return False
     return functools.reduce(
         lambda r1, r2:
         r1 and r2,
-        map(lambda m1, m2: m1 == m2, a, b),
+        map(lambda m1, m2: m1 == m2, l1, l2),
         True)
 
 
