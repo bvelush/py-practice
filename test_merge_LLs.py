@@ -27,11 +27,43 @@ def test_toStr():
     assert ll.toStr() == '1, 22, 333'
 
 
-def merge_ll(a: N, b: N) -> N:
-    curr_a = a
-    curr_b = b
+def merge_ll(l1: N, l2: N) -> N:
+    curr_l1 = l1
+    curr_l2 = l2
     pre_head = N(0)  # a placeholder to keep a head
     curr_ret = pre_head
-    while curr_a or curr_b:
-        pass
-    return None
+    while curr_l1 or curr_l2:
+        if not curr_l1:
+            consume_from = 2
+        elif not curr_l2:
+            consume_from = 1
+        else:
+            if curr_l1.v < curr_l2.v:
+                consume_from = 1
+            else:
+                consume_from = 2
+
+        if consume_from == 1:
+            curr_ret.n = N(curr_l1.v)
+            curr_l1 = curr_l1.n
+        else:
+            curr_ret.n = N(curr_l2.v)
+            curr_l2 = curr_l2.n
+
+        curr_ret = curr_ret.n
+
+    return pre_head.n
+
+
+def test_merge_ll():
+    l1 = N(1, N(5, N(10)))
+    assert l1.toStr() == '1, 5, 10'
+    l2 = N(1, N(1, N(2, N(2, N(3, N(4, N(10)))))))
+    assert l2.toStr() == '1, 1, 2, 2, 3, 4, 10'
+
+    assert merge_ll(l1, l2).toStr() == '1, 1, 1, 2, 2, 3, 4, 5, 10, 10'
+    assert merge_ll(l2, l1).toStr() == '1, 1, 1, 2, 2, 3, 4, 5, 10, 10'
+
+    assert merge_ll(None, None) == None
+    assert merge_ll(None, l1).toStr() == '1, 5, 10'
+    assert merge_ll(l2, None).toStr() == '1, 1, 2, 2, 3, 4, 10'
