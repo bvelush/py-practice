@@ -1,4 +1,4 @@
-# https://www.codinginterview.com/facebook-interview-questions, #4
+# https://www.educative.io/m/merge-two-sorted-linked-lists
 # Problem statement: Given two sorted linked lists, merge them so that the resulting linked list is also sorted.
 
 from dataclasses import dataclass

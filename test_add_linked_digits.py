@@ -1,5 +1,5 @@
 # Given the head pointers of two linked lists where each linked list represents an integer number (each node is a digit), add them and return the resulting linked list.
-# https://www.codinginterview.com/facebook-interview-questions, #3
+# https://www.educative.io/m/add-two-integers
 # numbers are represented as linked lists of digits, head is the lowest: 29 => 9->2->null
 
 from dataclasses import dataclass

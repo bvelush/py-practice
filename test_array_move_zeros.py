@@ -1,22 +1,22 @@
 # move all zeros to the beginning keeping the order
 # Given an integer array, move all elements that are equal to 0 to the left
 # while maintaining the order of other elements in the array.
-# https://www.codinginterview.com/facebook-interview-questions, #1
+# https://www.educative.io/m/move-zeros-left
 
 import functools
 
 
+# basic idea: fill in the list with zeros, then
+# starting at the end of the original list, add all non-zero
+# elements at the decrementing pointer
 def zeros_in_array(a: [int]) -> [int]:
     ret_val = [0] * len(a)
-    ret_zeros = 0
-    ret_others = len(a) - 1
+    non_zeros = len(a) - 1
 
     for i in range(len(a) - 1, -1, -1):
-        if a[i] == 0:
-            ret_zeros += 1
-        else:
-            ret_val[ret_others] = a[i]
-            ret_others -= 1
+        if a[i] != 0:
+            ret_val[non_zeros] = a[i]
+            non_zeros -= 1
 
     return ret_val
 

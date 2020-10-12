@@ -1,7 +1,7 @@
 # Merge overlapping intervals
 # Given a list of intervals, merge all the overlapping intervals
 # to produce a list that has only mutually exclusive intervals.
-# https://www.codinginterview.com/facebook-interview-questions, #2
+# https://www.educative.io/m/merge-overlapping-intervals
 
 
 import functools
@@ -14,21 +14,33 @@ class I:
     r: int
 
 
+# the problem statement is vague. I was assuming that incoming data are not sorted.
+# the solution idea is that I am sorting incoming data based on a lower boundary first,
+# then creating output with the first interval and then
+# taking one-by-one sorted incoming intervals to either do nothing (if they fully fit into
+# one of the output intervals), or increase a higher boundary, or create new interval if
+# they don't overlap. Lower boundary can't be increased because of the sorting: each next incoming
+# interval is guaranteed to have lower boundary greater or equal to those in output.
+# Note that the reference solution DOES NOT work properly on unsorted intervals, and it is much more
+# complex than my solution
 def intervals(intervals: [I]) -> [I]:
     if intervals == []:
         return []
 
     sorted_intervals = sorted(intervals, key=lambda i: i.l)
 
+    # the first interval from input -> to output
     ret_val = [sorted_intervals[0]]
     curr = 0
-    for i in range(1, len(sorted_intervals)):
+    for i in range(1, len(sorted_intervals)):  # for the rest in input...
         incoming = sorted_intervals[i]
+        # case of overlapping lower boundary of the input interval
         if incoming.l <= ret_val[curr].r:
-            if incoming.r > ret_val[curr].r:
+            if incoming.r > ret_val[curr].r:  # is the high boundary larger?
+                # increase higher boundary of output interval
                 ret_val[curr].r = incoming.r
-        else:
-            ret_val.append(incoming)
+        else:  # case of the current output interval is not overlapping with incoming
+            ret_val.append(incoming)  # add it to the output
             curr += 1
     return ret_val
 
