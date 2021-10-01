@@ -4,12 +4,13 @@
 # https://www.educative.io/m/move-zeros-left
 
 import functools
+from typing import List
 
 
 # basic idea: fill in the list with zeros, then
 # starting at the end of the original list, add all non-zero
 # elements at the decrementing pointer
-def zeros_in_array(a: [int]) -> [int]:
+def zeros_in_array(a: List[int]) -> List[int]:
     ret_val = [0] * len(a)
     non_zeros = len(a) - 1
 
@@ -21,12 +22,11 @@ def zeros_in_array(a: [int]) -> [int]:
     return ret_val
 
 
-def compare_lists(l1, l2: [int]) -> bool:
+def compare_lists(l1, l2: List[int]) -> bool:
     if (l1 == [] and l2 != []) or (l2 == [] and l1 != []):
         return False
     return functools.reduce(
-        lambda r1, r2:
-        r1 and r2,
+        lambda r1, r2: r1 and r2,
         map(lambda m1, m2: m1 == m2, l1, l2),
         True)
 

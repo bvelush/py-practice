@@ -3,6 +3,7 @@
 # numbers are represented as linked lists of digits, head is the lowest: 29 => 9->2->null
 
 from dataclasses import dataclass
+from typing import Tuple
 
 
 @dataclass
@@ -28,7 +29,7 @@ class D:  # digit
 
 
 # helper function to extract the current digit and progress to the next one
-def digit(a: D) -> (int, D):
+def digit(a: D) -> Tuple[int, D]:
     if a:
         return (a.v, a.n)
     return (0, None)
@@ -38,16 +39,19 @@ def digit(a: D) -> (int, D):
 # suprprisingly :), it worked immediately. The code is pretty self-explanatory:
 # we are adding digit by digit. If the result of addition is >10, then setting the carry bit
 # and adjusting the current digit result back to one digit (9+9 => 8 plus a carry bit)
-# we process until we have any digits or carry bit left in any of numbers.
-# why carry bit needs to be in the while? because 50+50 should run 3 times to get 100
-# what's the magic with the ret_val? it's a common practice in linked list (LL) problems
-# to hold the value of the future list head
-# before returning the result, we stripe out this heading element, returning the real head of the LL
+# we process until we have any digits left in any of linked lists, or carry bit is set.
+#  - Q: why carry bit needs to be in the loop condition?
+#    A: because 50+50 should run 3 times to get 100
+#  - Q: what's the magic with the ret_val?
+#    A: it's a common practice in linked list (LL) problems to have a dumb_head or pre_head. This way you avoid dealing
+#       with nulls, one condition less and code is cleaner. Before returning the result, we stripe out
+#       this heading element, returning the real head of the LL
 
 # after looking at the reference implementation at https://www.educative.io/m/add-two-integers,
 # I find out that my implementation is easier to read and is more compact. Also, the problem statement
 # didn't say how to return the result, so I assumed it's the same LL format as original numbers
-# (otherwise what's the point?!), but looks they are returning a plain INT with more code. Lame.
+# (otherwise it cannot be ADD operation. By definition of addition, it takes 2 arguments of the same type, and returns the element from the same type.
+# In other words), but looks they are returning a plain INT with more code. Lame.
 def add(a: D, b: D) -> D:
 
     curr_a = a

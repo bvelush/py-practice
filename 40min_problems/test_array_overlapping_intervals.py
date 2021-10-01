@@ -6,6 +6,7 @@
 
 import functools
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -23,7 +24,7 @@ class I:
 # interval is guaranteed to have lower boundary greater or equal to those in output.
 # Note that the reference solution DOES NOT work properly on unsorted intervals, and it is much more
 # complex than my solution
-def intervals(intervals: [I]) -> [I]:
+def intervals(intervals: List[I]) -> List[I]:
     if intervals == []:
         return []
 
@@ -45,7 +46,7 @@ def intervals(intervals: [I]) -> [I]:
     return ret_val
 
 
-def compare_lists(l1, l2):
+def compare_lists(l1, l2: List[I]) -> bool:
     if (l1 == [] and l2 != []) or (l2 == [] and l1 != []):
         return False
     return functools.reduce(lambda r1, r2: r1 and r2, map(lambda m1, m2: m1 == m2, l1, l2), True)
