@@ -26,7 +26,9 @@
 # result on LeetCode:
 # Runtime: 36 ms, faster than 25.91 % of Python3 online submissions for Unique Paths.
 # Memory Usage: 14.8 MB, less than 5.22 % of Python3 online submissions for Unique Paths.
-class Solution:
+class Solution_recursive:
+    name = "Recursive solution"
+
     def uniquePaths(self, m: int, n: int) -> int:
         cashe = {(1, 1): 1}
 
@@ -46,7 +48,13 @@ class Solution:
         return _uniquePaths(m, n)
 
 
-class Solution1:
+##
+# Runtime: 32 ms, faster than 65.05% of Python3 online submissions for Unique Paths.
+# Memory Usage: 14.5 MB, less than 14.73 % of Python3 online submissions for Unique Paths.
+##
+class Solution_iterative:
+    name = "Iterative solution"
+
     def uniquePaths(self, m: int, n: int) -> int:
         # do not use [[0]*n]*m, because it creates references of the single variable
         solutions = [[0 for _ in range(n)] for _ in range(m)]
@@ -57,30 +65,31 @@ class Solution1:
                 if nn == -1:
                     solutions[mm][nn] = 1
                 else:
-                    solutions[mm][nn] = solutions[mm][nn+1] + \
+                    solutions[mm][nn] = \
+                        solutions[mm][nn+1] + \
                         solutions[mm+1][nn]
         return solutions[0][0]
 
 
-def test_uniquePaths1():
-    s = Solution()
-    print(s.uniquePaths(1, 1))  # 1
-    print(s.uniquePaths(2, 1))  # 1
-    print(s.uniquePaths(1, 5))  # 1
-    print(s.uniquePaths(5, 1))  # 1
-    print(s.uniquePaths(7, 3))  # 28
-    print(s.uniquePaths(23, 12))  # 193536720
+# test case format: each 3-tuple is a test case of (m, n, result)
+test_cases = [
+    (1, 1, 1),
+    (2, 1, 1),
+    (1, 5, 1),
+    (5, 1, 1),
+    (7, 3, 28),
+    (3, 7, 28),
+    (23, 12, 193536720),
+    (12, 23, 193536720)
+]
 
 
-def test_uniquePaths2():
-    s = Solution1()
-    # print(s.uniquePaths(1, 1))
-    print(s.uniquePaths(2, 1))  # 1
-    # print(s.uniquePaths(1, 5))
-    # print(s.uniquePaths(5, 1))
-    # print(s.uniquePaths(7, 3))
-    # print(s.uniquePaths(23, 12))
+def exec_test_cases(s):
+    print(f"\nExecuting tests for {s.name}")
+    for case in test_cases:
+        print(f"testing {case}")
+        assert s.uniquePaths(case[0], case[1]) == case[2]
 
 
-test_uniquePaths1()
-test_uniquePaths2()
+exec_test_cases(Solution_recursive())
+exec_test_cases(Solution_iterative())
