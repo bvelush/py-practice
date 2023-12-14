@@ -52,8 +52,8 @@ def fib_gen(n: int) -> Generator[int, None, None]:
         yield curr
 
 
-print(fib1_wrapper(1000))
-print(fib2(1000))
+# print(fib1_wrapper(1000))
+# print(fib2(1000))
 
-for i in fib_gen(100):
-    print(i, end=' ')
+# for i in fib_gen(100):
+#     print(i, end=' ')

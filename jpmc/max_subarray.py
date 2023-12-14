@@ -25,17 +25,21 @@ def max_subarray(nums: List[int]) -> [int, int, int]: # returning the first and 
 
     return l_bound, r_bound, max_sum # sum(nums[l_bound:r_bound])
 
-def test(arr: List[int]):
+
+# TODO turn to pytest fixture
+def test():
+    arr = [1, 2, 3, -5, 0, 1, 2]
+    arr = [-2,1,-3,4,-1,2,1,-5,4]
+    arr = [1]
+    arr = [5,4,-1,7,8]
+    arr = [-1]
+    arr = [-2, -1]
+    
     answer = max_subarray(arr)
     ans_list = arr[answer[0]:answer[1]]
     print(ans_list)
     print(sum(ans_list))
     print(f'--- {answer[2]} ----\n')
 
-test([1, 2, 3, -5, 0, 1, 2])
-test([-2,1,-3,4,-1,2,1,-5,4])
-test([1])
-test([5,4,-1,7,8])
-test([-1])
-test([-2, -1]) 
+test()
 

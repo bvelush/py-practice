@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": ".venv\\Scripts\\python.exe"
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "python.testing.pytestArgs": [
+        "-c", 
+        "./pytest.ini"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

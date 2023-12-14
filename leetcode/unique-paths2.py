@@ -51,7 +51,11 @@ class Solution_recursive:
         pass
 
 
-test_cases = [
+
+
+def test():
+
+    test_cases = [
     [
         [
             [0, 0, 0, 0],
@@ -69,10 +73,8 @@ test_cases = [
     ]
 ]
 
-
-def test(test_cases):
     for test, answer in test_cases:
         assert(Solution().uniquePathsWithObstacles(test) == answer)
 
 
-test(test_cases)
+test()
