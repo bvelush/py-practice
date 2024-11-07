@@ -50,9 +50,17 @@ class Solution2:
                     k -= offset
                 else:
                     return del_begin
-                        
         return k
 
+class Solution3:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        j = 1
+        for i in range(1, len(nums)):
+            if nums[i] != nums[i - 1]:
+                nums[j] = nums[i]
+                j += 1
+        return j
+    
 test_cases = [
     {
         "nums": [1,1],
@@ -76,7 +84,7 @@ for case in range(len(test_cases)):
     print(f'=== Test case {case+1}. Input: {nums}')
     expectedNums = test_cases[case]['expectedNums']
     expectedResult = test_cases[case]['expectedResult']
-    s = Solution2()
+    s = Solution3()
     result = s.removeDuplicates(nums)
 
     actual_result = nums[:result]
