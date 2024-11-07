@@ -27,27 +27,31 @@ class Solution1:
                 k -= 1
             else:
                 curr += 1
-
         return k
-        
 
+# this works 5% faster than others, 84% memory
 class Solution2:
     def removeDuplicates(self, nums: List[int]) -> int:
         k = len(nums)
-        if k < 2:
-             return k
-        
-        i = 0
-        j = 1
-        while i < k-1:
-            if nums[i] != nums[j]:
-                i += 1
-                j += 1
+        i = 1
+        while i < k:
+            if nums[i] != nums[i-1]:
+                i += 1          # skip to next if elements are different
             else:
-                
-
+                del_begin = i   # curr element is duplicate
+                del_end = i
+                while del_end < k and nums[del_end] == nums[del_begin]: # iterate to the end of array or till end of duplicate series
+                    del_end += 1
+                if del_end < k:
+                    # moving elements left to offset places
+                    offset = del_end - del_begin
+                    for j in range(del_end, k):
+                        nums[j-offset] = nums[j]
+                    k -= offset
+                else:
+                    return del_begin
+                        
         return k
-
 
 test_cases = [
     {
@@ -67,9 +71,9 @@ test_cases = [
     }
 ]
 
-
 for case in range(len(test_cases)):
     nums: List[int] = test_cases[case]['nums']
+    print(f'=== Test case {case+1}. Input: {nums}')
     expectedNums = test_cases[case]['expectedNums']
     expectedResult = test_cases[case]['expectedResult']
     s = Solution2()
@@ -78,4 +82,6 @@ for case in range(len(test_cases)):
     actual_result = nums[:result]
     actual_result.sort()
     if expectedNums != actual_result:
-        print(f'test case {case+1} failed: expected {expectedNums}, actual: {actual_result}')
+        print(f'*** Test case {case+1} failed: expected {expectedNums}, actual: {actual_result}')
+    else:
+        print(f'Test case {case + 1} passed.  result: {actual_result}, {result}')
