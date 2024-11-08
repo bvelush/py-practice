@@ -52,14 +52,10 @@ class Solution2:
                     return del_begin
         return k
 
+# two pointers approach, just copy each unique element to the curr pointer
 class Solution3:
     def removeDuplicates(self, nums: List[int]) -> int:
-        j = 1
-        for i in range(1, len(nums)):
-            if nums[i] != nums[i - 1]:
-                nums[j] = nums[i]
-                j += 1
-        return j
+        pass
     
 test_cases = [
     {
