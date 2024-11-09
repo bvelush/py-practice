@@ -8,9 +8,13 @@ class Solution:
         ret_val = ""
         for slice in zip(*strs):
             ch = slice[0]
-            for i in range(1, len(slice)):
-                if ch != slice[i]:
-                    return ret_val
+            # testing for all elements of slice to be the same
+            if len(set(slice)) != 1:
+                return ret_val
+            # less effective way:
+            # for i in range(1, len(slice)):
+            #     if ch != slice[i]:
+            #         return ret_val
             ret_val += ch
         return ret_val
 
