@@ -32,8 +32,6 @@ class Solution2:
         return ransomCounter & magCounter == ransomCounter
             
 
-
-    
 test_cases = [
     {
         "ransomNote": "a", 

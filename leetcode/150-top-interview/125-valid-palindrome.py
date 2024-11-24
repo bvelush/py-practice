@@ -17,7 +17,7 @@ class Solution_slower:
         return True
 
 # but there is a better way: if the character is not isalnum, just skip it. Interestingly, the time is THE SAME
-class Solution:
+class Solution2:
     def isPalindrome(self, s: str) -> bool:
         l = 0
         r = len(s)-1
@@ -36,29 +36,37 @@ class Solution:
             r -= 1
         return True
 
-test_cases = [
-    {
-        "str": "A man, a plan, a canal: Panama", 
-        "expected": True
-    },
-    {
-        "str": "race a car", 
-        "expected": False
-    },    
-    {
-        "str": "", 
-        "expected": True
-    },
-]
+# using list comprehensions and symmetric addressing (~)
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s = [ch.lower() for ch in s if ch.isalnum()]
+        ret_val = all(s[i] == s[~i] for i in range(len(s)//2))
+        return ret_val
 
-for case in range(len(test_cases)):
-    str = test_cases[case]['str']
-    print(f'=== Test case {case+1}. Input: {str}')
-    expected = test_cases[case]['expected']
-    s = Solution()
-    result = s.isPalindrome(str)
+if __name__ == "__main__":
+    test_cases = [
+        {
+            "str": "A man, a plan, a canal: Panama", 
+            "expected": True
+        },
+        {
+            "str": "race a car", 
+            "expected": False
+        },    
+        {
+            "str": "", 
+            "expected": True
+        },
+    ]
 
-    if expected != result:
-        print(f'*** Test case {case+1} failed: expected {expected}, actual: {result}')
-    else:
-        print(f'Test case {case + 1} passed.  result: {result}')
+    for case in range(len(test_cases)):
+        str = test_cases[case]['str']
+        print(f'=== Test case {case+1}. Input: {str}')
+        expected = test_cases[case]['expected']
+        s = Solution()
+        result = s.isPalindrome(str)
+
+        if expected != result:
+            print(f'*** Test case {case+1} failed: expected {expected}, actual: {result}')
+        else:
+            print(f'Test case {case + 1} passed.  result: {result}')
