@@ -1,8 +1,6 @@
 # https://leetcode.com/problems/ransom-note/description/?envType=study-plan-v2&envId=top-interview-150
 
 
-from typing import List
-
 # my solution
 class Solution1:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
