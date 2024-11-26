@@ -1,12 +1,16 @@
 # https://leetcode.com/problems/is-subsequence/description/?envType=study-plan-v2&envId=top-interview-150
 
+# beats 100%, memory beats 14%
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
         i = 0
         for ch in s:
-            while i < len(t) and ch != t[i]:
+            ch_found = False
+            while i < len(t) and not ch_found:
+                if t[i] == ch:
+                    ch_found = True
                 i += 1
-            if i >= len(t):
+            if not ch_found:
                 return False
         
         return True
