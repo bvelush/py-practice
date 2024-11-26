@@ -90,6 +90,8 @@ class Solution1:
 # solution 2: the idea is that at each level the queue contains only this level elements. So if we iterate for len(queue), 
 # for each element until the last setting next, and adding its children to the queue (but size will not change if it's in variable)
 # then we can speed up the process
+# TODO: implement this solution
+
 class Solution:
         def connect(self, root: 'Node') -> 'Node':
             if root == None:
