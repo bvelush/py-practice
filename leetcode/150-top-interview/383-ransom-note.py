@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/ransom-note/description/?envType=study-plan-v2&envId=top-interview-150
 
 
-# my solution
+# my solution (beats 16/8)
 class Solution1:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
         mag_hash = self.build_hash(magazine)
@@ -22,6 +22,7 @@ class Solution1:
                 ret_val[ch] = 1
         return ret_val
 
+# beats 81/8
 from collections import Counter
 class Solution2:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
