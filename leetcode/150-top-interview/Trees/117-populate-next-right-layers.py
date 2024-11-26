@@ -1,14 +1,15 @@
-# https://leetcode.com/problems/maximum-depth-of-binary-tree/?envType=study-plan-v2&envId=top-interview-150
+# https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/description/?envType=study-plan-v2&envId=top-interview-150
 
 # Definition for a binary tree node.
 from typing import Optional, List
 from collections import deque
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
         self.val = val
         self.left = left
         self.right = right
+        self.next = next
 
     def __str__(self) -> str: # printing with DFS, preprocess, Left first
         ret_val = ''
@@ -25,9 +26,9 @@ class TreeNode:
         return ret_val
 
     @staticmethod
-    def loadBFS(a: List[Optional[int]]) -> Optional["TreeNode"]:
+    def loadBFS(a: List[Optional[int]]) -> Optional["Node"]:
 
-        def is_left(node: TreeNode, q: deque) -> bool:
+        def is_left(node: Node, q: deque) -> bool:
             '''
                 Check for node equality to the next node. In this context, if they are equal, 
                 then the node is left to its parent, otherwise -- right
@@ -40,13 +41,13 @@ class TreeNode:
         if len(a) == 0:
             return None
         q = deque()
-        root = TreeNode(a[0])
+        root = Node(a[0])
         q.append(root) # queue will contain parents of the node to be processed, 
         q.append(root) # that is why we put it two times: there will be two nodes to process, L and R
         for item in a[1:]: # starting with 2nd element, since the first is processed already
-            parent: TreeNode = q.popleft()
+            parent: Node = q.popleft()
             if item != None:
-                curr = TreeNode(item)
+                curr = Node(item)
                 if is_left(parent, q):
                     parent.left = curr
                 else:
@@ -56,26 +57,48 @@ class TreeNode:
 
         return root            
 
-# solution beats 14%, memory beats 19%
-class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-        stack = deque()
-        stack.append([root, 1])
-        max_depth = 0
-        while stack:
-            curr = stack.pop()
-            curr_node = curr[0]
-            if curr_node.left == None and curr_node.right == None:
-                if curr[1] > max_depth:
-                    max_depth = curr[1]
-            if curr_node.left:
-                stack.append([curr_node.left, curr[1]+1])
-            if curr_node.right:
-                stack.append([curr_node.right, curr[1]+1])
-        return max_depth            
+# Solution 1: beats 56%, memory beats 7%
+# for each item in queue, we store the 'level'. when level is the same, we connect nodes at the same level
+class Solution1:
+        def connect(self, root: 'Node') -> 'Node':
+
+            def peek(q: deque) -> Node:
+                if q:
+                    return q[0]
+                else: 
+                    return None
+
+            if root == None:
+                return None
+            q = deque()
+            q.append([root, 0])
+            while q:
+                curr = q.popleft()
+                curr_node = curr[0]
+                curr_level = curr[1]
+                next_node = peek(q)
+                if next_node:
+                    if curr_level == next_node[1]:
+                        curr_node.next = next_node[0]
+                if curr_node.left:
+                    q.append([curr_node.left, curr_level+1])
+                if curr_node.right:
+                    q.append([curr_node.right, curr_level+1])
+
+            return root
         
+# solution 2: the idea is that at each level the queue contains only this level elements. So if we iterate for len(queue), 
+# for each element until the last setting next, and adding its children to the queue (but size will not change if it's in variable)
+# then we can speed up the process
+class Solution:
+        def connect(self, root: 'Node') -> 'Node':
+            if root == None:
+                return None
+
+            q = deque()
+            q.append(root)
+
+            return root
 
 if __name__ == "__main__":
 
@@ -101,7 +124,7 @@ if __name__ == "__main__":
     for case in test_loadBFS:
         bfs = case["BFS"]
         expected = case["expected"]
-        tree = TreeNode.loadBFS(bfs)
+        tree = Node.loadBFS(bfs)
         result = str(tree)
         if result == expected:
             print(f'Test case: {bfs}, passed')
@@ -110,25 +133,25 @@ if __name__ == "__main__":
 
     test_cases = [
         {
-            "BFS": [3,9,20,None,None,15,7], 
-            "expected": 3
-        },
-                {
-            "BFS": [1, None, 2], 
-            "expected": 2
+            "BFS": [1,2,3,4,5,None,7], 
+            "expected": [1,'#',2,3,'#',4,5,7,'#']
         },
         {
-            "BFS": [1, 2, 3, None, 4, 5, 6, 7, None, None, None, 8, None, None, None, None, 9], 
-            "expected": 5
+            "BFS": [], 
+            "expected": []
         },
+        # {
+        #     "BFS": [1, 2, 3, None, 4, 5, 6, 7, None, None, None, 8, None, None, None, None, 9], 
+        #     "expected": 5
+        # },
     ]
 
     for case in range(len(test_cases)):
-        root = TreeNode.loadBFS(test_cases[case]['BFS'])
+        root = Node.loadBFS(test_cases[case]['BFS'])
         print(f'=== Test case {case+1}. Input: {str}')
         expected = test_cases[case]['expected']
         s = Solution()
-        result = s.maxDepth(root)
+        result = s.connect(root)
 
         if expected != result:
             print(f'*** Test case {case+1} failed: expected {expected}, actual: {result}')
