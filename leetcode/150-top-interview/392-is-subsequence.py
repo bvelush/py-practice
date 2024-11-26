@@ -4,10 +4,11 @@ class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
         i = 0
         for ch in s:
-            if i < len(s)-1:
-                pass
-            else:
-                pass
+            while i < len(t) and ch != t[i]:
+                i += 1
+            if i >= len(t):
+                return False
+        
         return True
 
 
@@ -26,6 +27,11 @@ if __name__ == "__main__":
         {
             "str": "axc", 
             "t": "ahbgdceexd",
+            "expected": False
+        },
+        {
+            "str": "aaaaaa", 
+            "t": "bbaaaa",
             "expected": False
         },
     ]

@@ -43,6 +43,7 @@ class Solution:
         ret_val = all(s[i] == s[~i] for i in range(len(s)//2))
         return ret_val
 
+
 if __name__ == "__main__":
     test_cases = [
         {
