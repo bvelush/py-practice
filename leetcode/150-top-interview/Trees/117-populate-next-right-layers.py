@@ -91,7 +91,7 @@ class Solution1:
 # for each element until the last setting next, and adding its children to the queue (but size will not change if it's in variable)
 # then we can speed up the process
 # TODO: implement this solution
-
+# actually, this solution has the same profile: beats 56/7
 class Solution:
         def connect(self, root: 'Node') -> 'Node':
             if root == None:
@@ -99,6 +99,16 @@ class Solution:
 
             q = deque()
             q.append(root)
+            while q:
+                level_size = len(q)
+                for i in range(level_size):
+                    curr = q.popleft()
+                    if i < level_size-1:
+                        curr.next = q[0]
+                    if curr.left:
+                        q.append(curr.left)
+                    if curr.right:
+                        q.append(curr.right)
 
             return root
 
@@ -150,7 +160,7 @@ if __name__ == "__main__":
 
     for case in range(len(test_cases)):
         root = Node.loadBFS(test_cases[case]['BFS'])
-        print(f'=== Test case {case+1}. Input: {str}')
+        print(f'=== Test case {case+1}. Input: {root}')
         expected = test_cases[case]['expected']
         s = Solution()
         result = s.connect(root)
