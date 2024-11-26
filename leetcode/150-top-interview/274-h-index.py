@@ -2,11 +2,21 @@
 
 from typing import List
 
+# beats 100/16
 class Solution:
     def hIndex(self, citations: List[int]) -> int:
-
-        return 0
-
+        if len(citations) == 0:
+            return 0
+        
+        citations.sort(reverse=True)
+        max_h = min(1, citations[0])
+        for i in range(1, len(citations)):
+            curr_h = min(i+1, citations[i])
+            if max_h < curr_h:
+                max_h = curr_h
+            else: 
+                return max_h
+        return max_h
     
 test_cases = [
     {
